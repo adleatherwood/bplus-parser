@@ -3,6 +3,10 @@
 The bplus-parser library is a set of parsers and combinators inspired by the fparsec library.
 The goal was to create an easy to use, TypeScript friendly version of those libraries.
 
+#### Note
+
+This project is maintained over at GitLab: https://gitlab.com/adleatherwood/bplus-parser
+
 ## Example Usage
 
 Here's a basic example setup to parse the name and parameters of some function.  This is a
