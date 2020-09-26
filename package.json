@@ -1,0 +1,23 @@
+{
+    "name": "bplus-parser",
+    "version": "1.0.0",
+    "description": "A parsing library",
+    "main": "build/bplus-parser.ts",
+    "types": "build/bplus-parser.d.ts",
+    "scripts": {
+        "build": "tsc --project tsconfig.json",
+        "test": "jest",
+        "test-w": "jest --watchAll"
+    },
+    "keywords": [
+        "parser"
+    ],
+    "author": "Anthony Leatherwood",
+    "license": "GPL-3.0-or-later",
+    "devDependencies": {
+        "@types/jest": "^26.0.14",
+        "jest": "^26.4.2",
+        "ts-jest": "^26.3.0",
+        "typescript": "^4.0.2"
+    }
+}
