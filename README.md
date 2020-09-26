@@ -215,3 +215,5 @@ A case insensitive stream can be created with the following.
 ```typescript
 let stream - StringStream.create('this is a test', { caseInsensitive: true })
 ```
+
+Icons made by [freepik](https://www.flaticon.com/authors/freepik)
