@@ -1,5 +1,5 @@
+import { Result } from "bplus-composer"
 import { Parser, many1, exact, many, flatten4, separated } from "../src/parsers"
-import { Result } from "../src/results"
 import { StringStream, space, char } from "../src/strings"
 
 describe("basic tests", () => {

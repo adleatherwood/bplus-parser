@@ -1,4 +1,4 @@
-import { Result } from "../src/results"
+import { Result } from "bplus-composer"
 import { Parser } from "../src/parsers"
 import { StringStream } from "../src/strings"
 

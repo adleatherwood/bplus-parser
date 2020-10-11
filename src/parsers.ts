@@ -1,6 +1,5 @@
+import { Results, Result, Option } from "bplus-composer"
 import { Stream } from "./streams"
-import { Result } from "./results"
-import { Option } from "./options"
 
 export type Parsed<I, O> = {
     value: O,
@@ -12,7 +11,7 @@ export type Failed<I> = {
     remaining: Stream<I>
 }
 
-export type ParseResult<I, O> = Result<Parsed<I, O>, Failed<I>>
+export type ParseResult<I, O> = Results<Parsed<I, O>, Failed<I>>
 export type Parse<I, O> = (stream: Stream<I>) => ParseResult<I, O>
 export type Map<A, B> = (a: A) => B
 

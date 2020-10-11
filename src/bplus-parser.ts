@@ -1,5 +1,5 @@
-export { Result } from "./results"
-export { Option } from "./options"
+export { Result } from "bplus-composer"
+export { Option } from "bplus-composer"
 export { Stream } from "./streams"
 export {
     Parsed, Failed, ParseResult, Parse, Map, Parser, Builder,

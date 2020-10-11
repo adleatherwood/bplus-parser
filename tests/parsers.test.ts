@@ -1,5 +1,5 @@
+import { Result } from "bplus-composer"
 import { ParseResult, exact, many, take, skip, separated, separated1, any } from "../src/parsers"
-import { Result } from "../src/results"
 import { digit, number, StringStream } from "../src/strings"
 
 describe("exact tests", () => {

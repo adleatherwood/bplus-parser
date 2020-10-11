@@ -1,6 +1,6 @@
+import { Option } from "bplus-composer"
 import { Parser, exact, many, many1, maybe, any, flatten4 } from "./parsers"
 import { Stream } from "./streams"
-import { Option } from "./options"
 
 export type StringStream = Stream<string> & {
     tryTest(char: RegExp): Option<[string, StringStream]>
