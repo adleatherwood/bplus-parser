@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+## Version 1.1.1
+
+* Fixed `attempt` parser signature and added tests
+
 ## Version 1.1
 
 * Improved parser labeling & error formatting

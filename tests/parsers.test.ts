@@ -1,5 +1,5 @@
 import { Result } from "bplus-composer"
-import { ParseResult, exact, many, take, skip, separated, separated1, any, labeled, Parser, debug, maybe } from "../src/parsers"
+import { ParseResult, exact, many, take, skip, separated, separated1, any, labeled, Parser, debug, maybe, attempt } from "../src/parsers"
 import { digit, number, space, StringStream } from "../src/strings"
 
 describe("exact tests", () => {
@@ -297,5 +297,38 @@ describe("debug parser tests", () => {
         parser.parse(stream)
 
         expect(actual).toBe("24")
+    })
+})
+
+describe("attempt parser tests", () => {
+
+    test("attempt resets stream after failure", () => {
+        let stream = StringStream.create("abc")
+        let parser = attempt(exact("aby"))
+        let actual = Result.match(parser.parse(stream),
+            success => fail("Expected failure"),
+            failure => failure.remaining.value)
+
+        expect(actual).toBe("abc")
+    })
+
+    test("attempt increments stream after success", () => {
+        let stream = StringStream.create("abcdef")
+        let parser = attempt(exact("abc"))
+        let actual = Result.match(parser.parse(stream),
+            success => success.remaining.value,
+            failure => fail(failure.error))
+
+        expect(actual).toBe("def")
+    })
+
+    test("attempt usage test", () => {
+        let stream = StringStream.create("abc")
+        let parser = any(attempt(exact("aby")), attempt(exact("abz")), attempt(exact("abc")))
+        let actual = Result.match(parser.parse(stream),
+            success => success.value,
+            failure => fail(failure.error))
+
+        expect(actual).toBe("abc")
     })
 })

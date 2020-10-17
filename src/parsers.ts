@@ -185,14 +185,14 @@ export function many1<I, O>(parser: Parser<I, O>): Parser<I, O[]> {
     return many1L(`ONE OR MANY ${parser.label}`, parser)
 }
 
-export function attemptL<I, O>(label: string, parser: Parser<I, O>) {
-    Parser.create(label, (stream: Stream<I>) =>
+export function attemptL<I, O>(label: string, parser: Parser<I, O>): Parser<I, O> {
+    return Parser.create(label, (stream: Stream<I>) =>
         Result.match(parser.parse(stream),
             success => Parser.success(success.value, success.remaining),
             failure => Parser.refail(label, failure)))
 }
 
-export function attempt<I, O>(parser: Parser<I, O>) {
+export function attempt<I, O>(parser: Parser<I, O>): Parser<I, O> {
     return attemptL(`ATTEMPT ${parser.label}`, parser)
 }
 
