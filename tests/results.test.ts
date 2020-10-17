@@ -34,7 +34,7 @@ describe("result tests", () => {
     })
 
     test("fail with error", () => {
-        let actual = Result.match(Parser.failure("test", stream),
+        let actual = Result.match(Parser.failure("", "test", stream),
             success => success.value,
             failure => "pass")
 
@@ -42,7 +42,7 @@ describe("result tests", () => {
     })
 
     test("isfailure with error", () => {
-        let actual = Result.isFailure(Parser.failure("test", stream))
+        let actual = Result.isFailure(Parser.failure("", "test", stream))
 
         expect(actual).toBe(true)
     })

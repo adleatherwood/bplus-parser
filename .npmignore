@@ -1,5 +1,6 @@
 .ionide
 .vscode
+coverage
 tests
 src
 tsconfig.json

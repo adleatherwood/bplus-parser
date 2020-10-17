@@ -1,4 +1,5 @@
 \.ionide
+coverage
 node_modules
 build
 .fake

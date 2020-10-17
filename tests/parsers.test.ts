@@ -1,6 +1,6 @@
 import { Result } from "bplus-composer"
-import { ParseResult, exact, many, take, skip, separated, separated1, any } from "../src/parsers"
-import { digit, number, StringStream } from "../src/strings"
+import { ParseResult, exact, many, take, skip, separated, separated1, any, labeled, Parser, debug, maybe } from "../src/parsers"
+import { digit, number, space, StringStream } from "../src/strings"
 
 describe("exact tests", () => {
     let stream = StringStream.create("this is a test")
@@ -259,5 +259,43 @@ describe("number parser tests", () => {
             success => success.value,
             failure => fail(failure.error))
         expect(actual).toBe(-12.3)
+    })
+})
+
+describe("error message tests", () => {
+
+    test("labeled parsers error with label", () => {
+        const exampleA = StringStream.create("x")
+
+        let result1 = number.parse(exampleA)
+        let actual1 = Result.match(result1,
+            success => fail("error expected"),
+            failure => failure.error)
+
+        expect(actual1).toContain("NUMBER")
+
+        let parser = labeled("TEST", number)
+        let result = parser.parse(exampleA)
+        let actual = Result.match(result,
+            success => fail("error expected"),
+            failure => failure.error)
+
+        expect(actual).toContain("TEST")
+    })
+})
+
+describe("debug parser tests", () => {
+
+    test("success handler called", () => {
+        let actual = ""
+        let stream = StringStream.create("2 4")
+        let parser = Parser.combine(debug(number, (v, r) => actual += v, (e, r) => fail("Should not fail")))
+            .skip(space)
+            .and(debug(number, (v, r) => actual += v, (e, r) => fail("Should not fail")))
+            .build()
+
+        parser.parse(stream)
+
+        expect(actual).toBe("24")
     })
 })

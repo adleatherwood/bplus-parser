@@ -66,7 +66,7 @@ describe("basic tests", () => {
         let result = parser.parse(stream)
 
         // debugging parsers is challenging, printing the result out helps
-        console.log(result)
+        //console.log(result)
 
         // deconstructing the result
         let value = Result.match(result,

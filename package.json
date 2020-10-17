@@ -1,13 +1,14 @@
 {
     "name": "bplus-parser",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "A parsing library",
     "main": "build/bplus-parser.ts",
     "types": "build/bplus-parser.d.ts",
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "jest",
-        "test-w": "jest --watchAll"
+        "test-coverage": "jest --coverage",
+        "test-watch": "jest --watchAll"
     },
     "keywords": [
         "parser"

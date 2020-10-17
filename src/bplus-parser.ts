@@ -1,15 +1,16 @@
 export { Result } from "bplus-composer"
 export { Option } from "bplus-composer"
-export { Stream } from "./streams"
+export { Stream, IterableStream } from "./streams"
 export {
     Parsed, Failed, ParseResult, Parse, Map, Parser, Builder,
     and, skip, take,
     maybeL, maybe, manyL, many, many1L, many1, attemptL, attempt, mapL, map, labeled,
     exactL, exact, betweenL, between, separatedL, separated, separated1L, separated1, anyL, any,
-    flatten3, flatten4, flatten5, flatten6, flatten7, flatten8
+    flatten3, flatten4, flatten5, flatten6, flatten7, flatten8,
+    debug
 } from "./parsers"
 export {
-    StringStream, StringOptions, DefaultOptions,
+    StringStream, StringsStream, StringOptions, DefaultOptions,
     char, space, letter, digit, number
 } from "./strings"
 

@@ -1,9 +1,13 @@
 import { Option } from "bplus-composer"
-import { Parser, exact, many, many1, maybe, any, flatten4 } from "./parsers"
-import { Stream } from "./streams"
+import { Parser, exact, many, maybe, any, flatten4, many1 } from "./parsers"
+import { isIterable, Stream } from "./streams"
 
 export type StringStream = Stream<string> & {
     tryTest(char: RegExp): Option<[string, StringStream]>
+}
+
+export type StringsStream = Stream<string> & {
+    tryTest(char: RegExp): Option<[string, StringsStream]>
 }
 
 export type StringOptions = {
@@ -52,6 +56,41 @@ export module StringStream {
     }
 }
 
+export module StringsStream {
+
+    export function create(input: Iterable<string>): StringsStream
+    export function create(input: Iterator<string>, options: StringOptions): StringsStream
+    export function create(input: Iterable<string> | Iterator<string>, options: StringOptions = DefaultOptions): StringsStream {
+        const iterator = isIterable<string>(input)
+            ? input[Symbol.iterator]()
+            : input
+
+        const next = iterator.next()
+
+        let stream = {
+            tryTake(value: string): Option<[string, StringsStream]> {
+                if (!options.caseInsensitive && next.value.startsWith(value))
+                    return [value, create(iterator, this.options)]
+                else if (options.caseInsensitive) {
+                    if (equalCi(next.value, value))
+                        return [next.value, create(iterator, this.options)]
+                }
+            },
+            tryTest(char: RegExp): Option<[string, StringsStream]> {
+                if (char.test(next.value))
+                    return [next.value, create(iterator, this.options)]
+            },
+            eof() {
+                return next.done == true
+            },
+            value: next.value,
+            options: options
+        }
+
+        return stream
+    }
+}
+
 // STRING DEFINITIONS
 
 const wsExp = /\s/
@@ -61,15 +100,12 @@ const letterExp = /\w/i
 // STRING PARSERS
 
 export function char(label: string, exp: RegExp): Parser<string, string> {
-    return {
-        label: label,
-        parse: (stream: Stream<string>) => {
-            return Option.match((stream as StringStream).tryTest(exp),
-                some => Parser.success(some[0], some[1]),
-                none => Parser.failure("", stream))
+    return Parser.create(label, (stream: Stream<string>) => {
+        return Option.match((stream as StringStream).tryTest(exp),
+            some => Parser.success(some[0], some[1]),
+            none => Parser.failure(label, "Expected: " + label, stream))
 
-        },
-    }
+    })
 }
 
 export const space = char("SPACE", wsExp)
