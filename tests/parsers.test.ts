@@ -1,5 +1,5 @@
 import { Result } from "bplus-composer"
-import { ParseResult, exact, many, take, skip, separated, separated1, any, labeled, Parser, debug, maybe, attempt } from "../src/parsers"
+import { ParseResult, exact, many, take, skip, separated, separated1, any, labeled, Parser, debug, maybe, attempt, flatten3, map } from "../src/parsers"
 import { digit, number, space, StringStream } from "../src/strings"
 
 describe("exact tests", () => {
@@ -304,7 +304,7 @@ describe("attempt parser tests", () => {
 
     test("attempt resets stream after failure", () => {
         let stream = StringStream.create("abc")
-        let parser = attempt(exact("aby"))
+        let parser = attempt(Parser.combine(exact("a")).and(exact("b")).and(exact("z")).build())
         let actual = Result.match(parser.parse(stream),
             success => fail("Expected failure"),
             failure => failure.remaining.value)
@@ -314,7 +314,7 @@ describe("attempt parser tests", () => {
 
     test("attempt increments stream after success", () => {
         let stream = StringStream.create("abcdef")
-        let parser = attempt(exact("abc"))
+        let parser = attempt(Parser.combine(exact("a")).and(exact("b")).and(exact("c")).build())
         let actual = Result.match(parser.parse(stream),
             success => success.remaining.value,
             failure => fail(failure.error))
@@ -324,9 +324,14 @@ describe("attempt parser tests", () => {
 
     test("attempt usage test", () => {
         let stream = StringStream.create("abc")
-        let parser = any(attempt(exact("aby")), attempt(exact("abz")), attempt(exact("abc")))
+
+        let parser1 = attempt(Parser.combine(exact("a")).and(exact("b")).and(exact("y")).build())
+        let parser2 = attempt(Parser.combine(exact("a")).and(exact("b")).and(exact("z")).build())
+        let parser3 = attempt(Parser.combine(exact("a")).and(exact("b")).and(exact("c")).build())
+
+        let parser = map(any(attempt(parser1), attempt(parser2), attempt(parser3)), flatten3)
         let actual = Result.match(parser.parse(stream),
-            success => success.value,
+            success => success.value.join(""),
             failure => fail(failure.error))
 
         expect(actual).toBe("abc")
