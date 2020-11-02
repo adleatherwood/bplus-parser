@@ -7,7 +7,7 @@
     "scripts": {
         "build": "tsc --project tsconfig.json",
         "test": "jest",
-        "test-coverage": "jest --coverage",
+        "coverage": "jest --coverage",
         "test-watch": "jest --watchAll"
     },
     "keywords": [

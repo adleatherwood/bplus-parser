@@ -1,11 +1,20 @@
 # BPLUS-PARSER
 
-The bplus-parser library is a set of parsers and combinators inspired by the fparsec library.
+The bplus-parser library is a set of parsers and combinators inspired by the FParsec library.
 The goal was to create an easy to use, TypeScript friendly version of those libraries.
+
+![pipeline](https://gitlab.com/adleatherwood/bplus-parser/badges/master/pipeline.svg)
+![coverage](https://gitlab.com/adleatherwood/bplus-parser/badges/master/coverage.svg)
 
 #### Note
 
 This project is maintained over at GitLab: https://gitlab.com/adleatherwood/bplus-parser
+
+## Install
+
+```sh
+npm i bplus-parser
+```
 
 ## Example Usage
 
@@ -99,44 +108,44 @@ In the following signatures, we'll assume that 'a', 'b', 'c', etc. are parsers.
 
 ### Value Parser Constructors
 
-| Name | Signature | Function|
-|------|-----------|---------|
-| exact     | (a) => a     | Returns the exact value if matched
-| between   | (a,o,c) => a | Returns the result of 'a' from in between 'o' and 'c'
-| separated | (a, d) =>    | Returns an 'a' array that is delimited by 'd'
+| Name      | Signature    | Function                                              |
+| --------- | ------------ | ----------------------------------------------------- |
+| exact     | (a) => a     | Returns the exact value if matched                    |
+| between   | (a,o,c) => a | Returns the result of 'a' from in between 'o' and 'c' |
+| separated | (a, d) =>    | Returns an 'a' array that is delimited by 'd'         |
 
 ### Parser Modifiers
 
-| Name | Signature | Function|
-|------|-----------|---------|
-| maybe   | (a) => a    | If the parser succeeds it returns the value, otherwise undefined
-| many    | (a) => a[]  | Returns 0 to (n) values depending on many times the parser succeeds
-| many1   | (a) => a[]  | Like 'many', but returns 1 to (n) values and fails if no values are found
-| any     | (...a) => a | Returns the result of the first successful parser of the array
-| attempt | (a) => a    | For ensuring you can walk back the stream index if the parser fails
-| map     | (a) => b    | For transforming input to a different type
-| labeled | (a) => a    | Adds a label to the current parser
+| Name    | Signature   | Function                                                                  |
+| ------- | ----------- | ------------------------------------------------------------------------- |
+| maybe   | (a) => a    | If the parser succeeds it returns the value, otherwise undefined          |
+| many    | (a) => a[]  | Returns 0 to (n) values depending on many times the parser succeeds       |
+| many1   | (a) => a[]  | Like 'many', but returns 1 to (n) values and fails if no values are found |
+| any     | (...a) => a | Returns the result of the first successful parser of the array            |
+| attempt | (a) => a    | For ensuring you can walk back the stream index if the parser fails       |
+| map     | (a) => b    | For transforming input to a different type                                |
+| labeled | (a) => a    | Adds a label to the current parser                                        |
 
 ### Parser Helpers (Mapping)
 
-| Name | Signature | Function|
-|------|-----------|---------|
-| flatten3-8 | ((a,b),c) => [a,b,c] | Takes nested tuples and flattens them into a single tuple
+| Name       | Signature            | Function                                                  |
+| ---------- | -------------------- | --------------------------------------------------------- |
+| flatten3-8 | ((a,b),c) => [a,b,c] | Takes nested tuples and flattens them into a single tuple |
 
 ### String Specific Parser Constructors
 
-| Name | Signature | Function|
-|------|-----------|---------|
-| char | (ex) => c  | Like 'exact', but takes a regular expression for a single character
+| Name | Signature | Function                                                            |
+| ---- | --------- | ------------------------------------------------------------------- |
+| char | (ex) => c | Like 'exact', but takes a regular expression for a single character |
 
 ### Predefined String Parsers
 
-| Name | Function|
-|------|---------|
-| space  | Matches a single space
-| letter | Matches any letter
-| digit  | Matches any digit
-| number | Matches a number (e.g. "12", "1.2", "-12")
+| Name   | Function                                   |
+| ------ | ------------------------------------------ |
+| space  | Matches a single space                     |
+| letter | Matches any letter                         |
+| digit  | Matches any digit                          |
+| number | Matches a number (e.g. "12", "1.2", "-12") |
 
 ## The Parser Builder
 
@@ -163,7 +172,7 @@ with a line by line breakdown.
 
 ```typescript
 const numberParser: Parser<string,number> =
-    // Paser.combine() starts the builder workflow.  It takes a single parser.
+    // Parser.combine() starts the builder workflow.  It takes a single parser.
     // Our first parser might return a "+" or a "-" or nothing as "-"
     Parser.combine(maybe(any(exact("+"), exact("-"))))
         // 'and' takes the previous sign and also returns 1 to (n) digits as ["-", [1,2,3]]
@@ -185,11 +194,11 @@ const numberParser: Parser<string,number> =
 
 The available builder functions are as follows:
 
-| Name | Signature | Function|
-|------|-----------|---------|
-| and  | (a, b) => [a,b] | Takes two parsers and returns a tuple of their results
-| take | (a, b) => b     | Discards and previously accumulated values and takes the value of 'b'
-| skip | (a, b) => a     | Skips the value of 'b' and keeps the value of 'a'
+| Name | Signature       | Function                                                              |
+| ---- | --------------- | --------------------------------------------------------------------- |
+| and  | (a, b) => [a,b] | Takes two parsers and returns a tuple of their results                |
+| take | (a, b) => b     | Discards and previously accumulated values and takes the value of 'b' |
+| skip | (a, b) => a     | Skips the value of 'b' and keeps the value of 'a'                     |
 
 Skip and take seem backwards, but in the context of a '.'-chained builder it fairly intuitive.
 
