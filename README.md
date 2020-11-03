@@ -12,6 +12,8 @@ This project is maintained over at GitLab: https://gitlab.com/adleatherwood/bplu
 
 ## Install
 
+https://www.npmjs.com/package/bplus-parser
+
 ```sh
 npm i bplus-parser
 ```
