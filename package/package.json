@@ -1,0 +1,19 @@
+{
+    "name": "bplus-parser",
+    "version": "1.1.4",
+    "description": "A parsing library",
+    "main": "./build",
+    "types": "./build",
+    "keywords": [
+        "parser"
+    ],
+    "author": "Anthony Leatherwood",
+    "license": "GPL-3.0-or-later",
+    "repository": {
+        "type": "git",
+        "url": "git@gitlab.com:adleatherwood/bplus-parser.git"
+    },
+    "dependencies": {
+        "bplus-composer": "^1.0.5"
+    }
+}

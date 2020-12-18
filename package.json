@@ -1,11 +1,10 @@
 {
     "name": "bplus-parser",
-    "version": "1.1.3",
     "description": "A parsing library",
-    "main": "build/bplus-parser.ts",
-    "types": "build/bplus-parser.d.ts",
+    "main": "package/build/index.ts",
+    "types": "package/build/index.d.ts",
     "scripts": {
-        "build": "tsc --project tsconfig.json",
+        "build": "ncp README.md ./package/README.md && tsc --project tsconfig.json",
         "test": "jest",
         "coverage": "jest --coverage",
         "test-watch": "jest --watchAll"
@@ -18,10 +17,11 @@
     "devDependencies": {
         "@types/jest": "^26.0.14",
         "jest": "^26.4.2",
+        "ncp": "^2.0.0",
         "ts-jest": "^26.3.0",
         "typescript": "^4.0.2"
     },
     "dependencies": {
-        "bplus-composer": "^1.0.1"
+        "bplus-composer": "^1.0.5"
     }
 }
