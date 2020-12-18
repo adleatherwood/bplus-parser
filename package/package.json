@@ -1,6 +1,6 @@
 {
     "name": "bplus-parser",
-    "version": "1.1.4",
+    "version": "1.1.6",
     "description": "A parsing library",
     "main": "./build",
     "types": "./build",
@@ -14,6 +14,6 @@
         "url": "git@gitlab.com:adleatherwood/bplus-parser.git"
     },
     "dependencies": {
-        "bplus-composer": "^1.0.5"
+        "bplus-composer": "^1.0.6"
     }
 }

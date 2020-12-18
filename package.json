@@ -4,7 +4,7 @@
     "main": "package/build/index.ts",
     "types": "package/build/index.d.ts",
     "scripts": {
-        "build": "ncp README.md ./package/README.md && tsc --project tsconfig.json",
+        "build": "ncp README.md ./package/README.md && ncp LICENSE ./package/LICENSE && tsc --project tsconfig.json",
         "test": "jest",
         "coverage": "jest --coverage",
         "test-watch": "jest --watchAll"
@@ -22,6 +22,6 @@
         "typescript": "^4.0.2"
     },
     "dependencies": {
-        "bplus-composer": "^1.0.5"
+        "bplus-composer": "^1.0.6"
     }
 }
